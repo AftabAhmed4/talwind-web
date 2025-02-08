@@ -1,101 +1,86 @@
+"use client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import Gffice from "../../public/image.png";
+import Product from "../app/product";
 
-export default function Home() {
+// Typewriter Effect Component
+const TypewriterText = () => {
+  const fullText = "Streamline Payments for Your Business";
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const typingSpeed = 100;
+  const pauseDuration = 1000;
+
+  useEffect(() => {
+    // let index = isDeleting ? fullText.length : 0;
+    const interval = setInterval(() => {
+      setDisplayText((prev) =>
+        isDeleting ? prev.slice(0, -1) : fullText.slice(0, prev.length + 1)
+      );
+
+      if (!isDeleting && displayText === fullText) {
+        setTimeout(() => setIsDeleting(true), pauseDuration);
+      } else if (isDeleting && displayText === "") {
+        setIsDeleting(false);
+      }
+    }, typingSpeed);
+
+    return () => clearInterval(interval);
+  }, [displayText, isDeleting]);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight tracking-tight py-6">
+      {displayText}
+    </h1>
+  );
+};
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function HeroSection() {
+  return (
+    <section className="bg-gray-50 dark:bg-gray-900 py-16 px-6 md:px-12 lg:py-24 lg:px-20 ">
+      <div className="grid max-w-7xl mx-auto gap-12 lg:grid-cols-12 items-center">
+        
+        {/* Left Content */}
+        <div className="lg:col-span-7 text-center lg:text-left mt-24">
+          <TypewriterText />
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 mt-10" >
+            Powering global transactions with seamless integration, robust security, and effortless tax compliance.
+          </p>
+          
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
+            <a
+              href="#"
+              className="px-6 py-3 text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 transition"
+            >
+              Get Started
+            </a>
+            <a
+              href="#"
+              className="px-6 py-3 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-100 dark:hover:bg-gray-800 dark:text-blue-400 dark:border-blue-400 transition"
+            >
+              Speak to Sales
+            </a>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        {/* Right Image */}
+        <div className="lg:col-span-5 flex justify-center">
           <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src={Gffice}
+            alt="Payment Solutions"
+            width={450}
+            height={450}
+            className="rounded-xl shadow-2xl"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </div>
+      </div>
+
+      {/* Product Component */}
+      <div className="mt-12">
+        <Product />
+      </div>
+    </section>
   );
 }
